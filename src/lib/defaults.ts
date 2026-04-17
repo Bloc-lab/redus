@@ -46,10 +46,46 @@ export const DEFAULT_CONTENT: Record<string, string> = {
 
   'cta.title': 'Připraveni optimalizovat své účetnictví?',
   'cta.desc': 'Domluvte si nezávaznou úvodní konzultaci — rádi vám ukážeme, jak můžeme pomoci.',
+  'cta.btnPhone': '',
+  'cta.btnEmail': 'Napište nám e-mail',
 
   'pricing.title': 'Ceník',
   'pricing.teaser':
     'Transparentní ceny podle rozsahu spolupráce. Konkrétní nabídku připravíme po krátké konzultaci.',
+  'pricing.billingMode': 'dual',
+  'pricing.billingMonthly': 'Měsíčně',
+  'pricing.billingYearly': 'Ročně – sleva 20 %',
+  'pricing.featuresHeading': 'Zahrnuje:',
+  'pricing.plan1.title': 'Základ',
+  'pricing.plan1.priceMonthly': '690 Kč / měsíc',
+  'pricing.plan1.priceYearly': '6 600 Kč / rok',
+  'pricing.plan1.desc':
+    'Vhodné pro menší firmy a živnostníky, které chtějí mít účetnictví v pořádku bez starostí.',
+  'pricing.plan1.cta': 'Nezávazně poptat',
+  'pricing.plan1.ctaHref': '',
+  'pricing.plan1.popularBadge': '',
+  'pricing.plan1.features':
+    'Vedení účetnictví\nMěsíční přehled\nEmail podpora\nZákladní daňová agenda',
+  'pricing.plan2.title': 'Business',
+  'pricing.plan2.priceMonthly': '1 490 Kč / měsíc',
+  'pricing.plan2.priceYearly': '14 300 Kč / rok',
+  'pricing.plan2.desc':
+    'Pro firmy, které potřebují víc než minimum — rychlejší reakce a širší rozsah služeb.',
+  'pricing.plan2.cta': 'Nezávazně poptat',
+  'pricing.plan2.ctaHref': '',
+  'pricing.plan2.popularBadge': 'Nejoblíbenější',
+  'pricing.plan2.features':
+    'Vše ze Základ\nPrioritní podpora\nKonzultace k rozhodnutím\nHlubší daňové plánování\nSpolupráce s vaším právníkem',
+  'pricing.plan3.title': 'Enterprise',
+  'pricing.plan3.priceMonthly': 'Individuálně',
+  'pricing.plan3.priceYearly': 'Individuálně',
+  'pricing.plan3.desc':
+    'Na míru pro větší organizace a složitější struktury — domluvíme rozsah podle vašich potřeb.',
+  'pricing.plan3.cta': 'Domluvit konzultaci',
+  'pricing.plan3.ctaHref': '',
+  'pricing.plan3.popularBadge': '',
+  'pricing.plan3.features':
+    'Dedikovaný kontakt\nVlastní reporty a procesy\nStrategické poradenství\nVíce entit / konsolidace\nSLA dle dohody',
   'tax.title': 'Daňové poradenství',
   'tax.teaser':
     'Strategické daňové plánování, optimalizace a podpora při jednání s finanční správou.',

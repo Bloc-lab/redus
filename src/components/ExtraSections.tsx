@@ -1,5 +1,6 @@
 import { pick } from '../lib/defaults'
 import { useSite } from '../context/SiteContentContext'
+import { PricingPlans } from './PricingPlans'
 
 export function ExtraSections() {
   const { content } = useSite()
@@ -12,14 +13,17 @@ export function ExtraSections() {
     <>
       <section
         id="cenik"
-        className="scroll-mt-24 border-y border-neutral-200 bg-neutral-50 px-4 py-12 lg:px-6"
+        className="scroll-mt-24 border-y border-neutral-200 bg-neutral-50 px-4 py-12 lg:px-6 dark:bg-neutral-950/50"
       >
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-xl font-bold text-neutral-900 sm:text-2xl">
+          <h2 className="text-xl font-bold text-neutral-900 sm:text-2xl dark:text-neutral-50">
             {pricingTitle}
           </h2>
-          <p className="mt-3 text-neutral-600">{pricingTeaser}</p>
+          <p className="mt-3 text-neutral-600 dark:text-neutral-300">
+            {pricingTeaser}
+          </p>
         </div>
+        <PricingPlans />
       </section>
       <section
         id="danove"

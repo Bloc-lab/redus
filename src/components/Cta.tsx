@@ -8,6 +8,9 @@ export function Cta() {
   const desc = pick(content, 'cta.desc')
   const phone = pick(content, 'contact.phone')
   const email = pick(content, 'contact.email')
+  const phoneLabel =
+    content['cta.btnPhone']?.trim() || phone
+  const emailLabel = pick(content, 'cta.btnEmail')
 
   const telHref = phone.replace(/\s/g, '')
 
@@ -26,14 +29,14 @@ export function Cta() {
             className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-[#2c4ab1] shadow-md transition hover:bg-neutral-100"
           >
             <Phone className="h-4 w-4" aria-hidden />
-            {phone}
+            {phoneLabel}
           </a>
           <a
             href={`mailto:${email}`}
             className="inline-flex items-center gap-2 rounded-xl border-2 border-white/80 bg-transparent px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
           >
             <Mail className="h-4 w-4" aria-hidden />
-            Napište nám e-mail
+            {emailLabel}
           </a>
         </div>
       </div>
