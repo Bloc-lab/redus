@@ -11,7 +11,7 @@ export function Layout() {
     <div className="flex min-h-screen flex-col">
       {loading ? (
         <div
-          className="h-1 w-full animate-pulse bg-gradient-to-r from-[#2c4ab1]/30 via-[#2c4ab1] to-[#2c4ab1]/30"
+          className="h-1 w-full animate-pulse bg-gradient-to-r from-[var(--brand-primary-30)] via-[var(--brand-primary)] to-[var(--brand-primary-30)]"
           aria-hidden
         />
       ) : null}

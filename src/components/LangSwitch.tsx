@@ -22,7 +22,7 @@ export function LangSwitch() {
           onClick={() => setLang(value)}
           className={`rounded-md px-2 py-1 transition ${
             lang === value
-              ? 'bg-white text-[#2c4ab1] shadow-sm'
+              ? 'bg-white text-[var(--brand-primary)] shadow-sm'
               : 'text-neutral-600 hover:text-neutral-900'
           }`}
         >

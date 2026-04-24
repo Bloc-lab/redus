@@ -17,7 +17,9 @@ function HighlightedTitle({
   return (
     <>
       {title.slice(0, i)}
-      <span className="text-[#2c4ab1]">{title.slice(i, i + accent.length)}</span>
+      <span className="text-[var(--brand-primary)]">
+        {title.slice(i, i + accent.length)}
+      </span>
       {title.slice(i + accent.length)}
     </>
   )
@@ -38,7 +40,7 @@ export function Hero() {
     <section className="relative overflow-hidden bg-white px-4 pb-16 pt-10 lg:px-6 lg:pb-24 lg:pt-14">
       <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center">
         <div>
-          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#2c4ab1]/20 bg-[#2c4ab1]/5 px-3 py-1 text-xs font-semibold text-[#2c4ab1]">
+          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--brand-primary-border)] bg-[var(--brand-primary-soft-2)] px-3 py-1 text-xs font-semibold text-[var(--brand-primary)]">
             <ShieldCheck className="h-3.5 w-3.5" aria-hidden />
             {badge}
           </p>
@@ -51,7 +53,7 @@ export function Hero() {
           <div className="mt-8 flex flex-wrap gap-3">
             <a
               href="/#kontakt"
-              className="inline-flex items-center gap-2 rounded-xl bg-[#2c4ab1] px-5 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#243f96]"
+              className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand-primary)] px-5 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[var(--brand-primary-hover)]"
             >
               {ctaPrimary}
               <ArrowRight className="h-4 w-4" aria-hidden />
@@ -76,7 +78,7 @@ export function Hero() {
           </div>
           <div className="absolute -bottom-4 left-4 max-w-[240px] rounded-2xl border border-neutral-100 bg-white p-4 shadow-lg sm:left-6">
             <div className="flex items-start gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#2c4ab1]/10 text-[#2c4ab1]">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-primary-soft)] text-[var(--brand-primary)]">
                 <ShieldCheck className="h-5 w-5" aria-hidden />
               </div>
               <p className="text-sm font-semibold leading-snug text-neutral-900">

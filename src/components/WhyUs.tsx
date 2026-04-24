@@ -44,14 +44,14 @@ export function WhyUs() {
           <ul className="mt-6 space-y-3">
             {bullets.map((b) => (
               <li key={b} className="flex items-start gap-3 text-neutral-800">
-                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#2c4ab1]/10 text-[#2c4ab1]">
+                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--brand-primary-soft)] text-[var(--brand-primary)]">
                   <Check className="h-3.5 w-3.5" aria-hidden />
                 </span>
                 <span className="font-medium">{b}</span>
               </li>
             ))}
           </ul>
-          <blockquote className="mt-8 border-l-4 border-[#2c4ab1]/40 pl-5 italic text-neutral-700">
+          <blockquote className="mt-8 border-l-4 border-[var(--brand-primary-border)] pl-5 italic text-neutral-700">
             <p>{quote}</p>
             <footer className="mt-3 text-sm font-semibold not-italic text-neutral-900">
               — {author}

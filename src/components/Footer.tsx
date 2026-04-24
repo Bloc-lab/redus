@@ -26,14 +26,14 @@ export function Footer() {
     <footer id="kontakt" className="scroll-mt-24 border-t border-neutral-200 bg-white px-4 py-14 lg:px-6">
       <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <div className="text-lg font-bold text-[#2c4ab1]">{siteName}</div>
+          <div className="text-lg font-bold text-[var(--brand-primary)]">{siteName}</div>
           <p className="mt-3 text-sm leading-relaxed text-neutral-600">
             {blurb}
           </p>
           <div className="mt-4 flex gap-3">
             <a
               href="https://www.linkedin.com/"
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-200 text-neutral-600 transition hover:border-[#2c4ab1] hover:text-[#2c4ab1]"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-200 text-neutral-600 transition hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)]"
               aria-label="LinkedIn"
             >
               <Linkedin className="h-4 w-4" />
@@ -48,7 +48,7 @@ export function Footer() {
           <ul className="mt-4 space-y-2 text-sm text-neutral-600">
             {serviceLinks.map((s) => (
               <li key={s}>
-                <a href="/#sluzby" className="hover:text-[#2c4ab1]">
+                <a href="/#sluzby" className="hover:text-[var(--brand-primary)]">
                   {s}
                 </a>
               </li>
@@ -62,18 +62,18 @@ export function Footer() {
           </h3>
           <ul className="mt-4 space-y-3 text-sm text-neutral-600">
             <li className="flex gap-2">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#2c4ab1]" />
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[var(--brand-primary)]" />
               {address}
             </li>
             <li className="flex gap-2">
-              <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#2c4ab1]" />
-              <a href={`tel:${telHref}`} className="hover:text-[#2c4ab1]">
+              <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[var(--brand-primary)]" />
+              <a href={`tel:${telHref}`} className="hover:text-[var(--brand-primary)]">
                 {phone}
               </a>
             </li>
             <li className="flex gap-2">
-              <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#2c4ab1]" />
-              <a href={`mailto:${email}`} className="hover:text-[#2c4ab1]">
+              <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[var(--brand-primary)]" />
+              <a href={`mailto:${email}`} className="hover:text-[var(--brand-primary)]">
                 {email}
               </a>
             </li>
@@ -93,11 +93,11 @@ export function Footer() {
       <div className="mx-auto mt-12 flex max-w-6xl flex-col items-start justify-between gap-4 border-t border-neutral-200 pt-8 text-xs text-neutral-500 sm:flex-row sm:items-center">
         <p>{copyright}</p>
         <div className="flex gap-6">
-          <Link to="/o-nas" className="hover:text-[#2c4ab1]">
+          <Link to="/o-nas" className="hover:text-[var(--brand-primary)]">
             Ochrana soukromí
           </Link>
           <span className="text-neutral-300">|</span>
-          <Link to="/o-nas" className="hover:text-[#2c4ab1]">
+          <Link to="/o-nas" className="hover:text-[var(--brand-primary)]">
             Obchodní podmínky
           </Link>
         </div>

@@ -3,8 +3,21 @@
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-redus-blue: #2c4ab1;
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  /* Brand colors (runtime overridable from CMS) */
+  --brand-primary: #2c4ab1;
+  --brand-secondary-1: #5a4fcf;
+  --brand-secondary-2: #22c55e;
+
+  /* Derived tokens (used by UI). */
+  --brand-primary-hover: color-mix(in oklab, var(--brand-primary) 85%, black);
+  --brand-primary-soft: color-mix(in oklab, var(--brand-primary) 12%, white);
+  --brand-primary-soft-2: color-mix(in oklab, var(--brand-primary) 6%, white);
+  --brand-primary-border: color-mix(in oklab, var(--brand-primary) 22%, white);
+  --brand-primary-30: color-mix(in oklab, var(--brand-primary) 30%, transparent);
 }
 
 html {

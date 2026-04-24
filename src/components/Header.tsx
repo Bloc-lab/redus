@@ -23,7 +23,7 @@ export function Header() {
             />
           ) : null}
           <div className="min-w-0">
-            <div className="text-xl font-bold tracking-tight text-[#2c4ab1]">
+            <div className="text-xl font-bold tracking-tight text-[var(--brand-primary)]">
               {siteName}
             </div>
             <div className="text-[10px] font-medium uppercase tracking-[0.2em] text-neutral-800">
@@ -36,16 +36,16 @@ export function Header() {
           className="hidden items-center gap-4 text-sm font-medium text-neutral-700 md:flex md:gap-6 lg:gap-8"
           aria-label="Hlavní navigace"
         >
-          <a href="/#sluzby" className="transition hover:text-[#2c4ab1]">
+          <a href="/#sluzby" className="transition hover:text-[var(--brand-primary)]">
             Služby
           </a>
-          <Link to="/o-nas" className="transition hover:text-[#2c4ab1]">
+          <Link to="/o-nas" className="transition hover:text-[var(--brand-primary)]">
             O nás
           </Link>
-          <a href="/#cenik" className="transition hover:text-[#2c4ab1]">
+          <a href="/#cenik" className="transition hover:text-[var(--brand-primary)]">
             Ceník
           </a>
-          <a href="/#danove" className="transition hover:text-[#2c4ab1]">
+          <a href="/#danove" className="transition hover:text-[var(--brand-primary)]">
             Daňové poradenství
           </a>
         </nav>
@@ -54,7 +54,7 @@ export function Header() {
           <LangSwitch />
           <a
             href="/#kontakt"
-            className="inline-flex shrink-0 rounded-xl bg-[#2c4ab1] px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-[#243f96] sm:px-4 sm:py-2.5 sm:text-sm"
+            className="inline-flex shrink-0 rounded-xl bg-[var(--brand-primary)] px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-[var(--brand-primary-hover)] sm:px-4 sm:py-2.5 sm:text-sm"
           >
             <span className="hidden sm:inline">Kontaktujte nás</span>
             <span className="sm:hidden">Kontakt</span>
@@ -66,16 +66,16 @@ export function Header() {
         className="flex gap-4 overflow-x-auto border-t border-neutral-100 px-4 py-2.5 text-xs font-medium text-neutral-700 md:hidden"
         aria-label="Rychlá navigace"
       >
-        <a href="/#sluzby" className="shrink-0 hover:text-[#2c4ab1]">
+        <a href="/#sluzby" className="shrink-0 hover:text-[var(--brand-primary)]">
           Služby
         </a>
-        <Link to="/o-nas" className="shrink-0 hover:text-[#2c4ab1]">
+        <Link to="/o-nas" className="shrink-0 hover:text-[var(--brand-primary)]">
           O nás
         </Link>
-        <a href="/#cenik" className="shrink-0 hover:text-[#2c4ab1]">
+        <a href="/#cenik" className="shrink-0 hover:text-[var(--brand-primary)]">
           Ceník
         </a>
-        <a href="/#danove" className="shrink-0 hover:text-[#2c4ab1]">
+        <a href="/#danove" className="shrink-0 hover:text-[var(--brand-primary)]">
           Daňové por.
         </a>
       </nav>

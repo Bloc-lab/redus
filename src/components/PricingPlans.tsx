@@ -73,7 +73,7 @@ export function PricingPlans() {
               onClick={() => setYearly(true)}
               className={`rounded-full px-4 py-2 text-sm font-semibold transition sm:px-5 ${
                 yearly
-                  ? 'bg-[#2c4ab1] text-white shadow-sm'
+                  ? 'bg-[var(--brand-primary)] text-white shadow-sm'
                   : 'text-neutral-600 hover:bg-neutral-50 dark:text-neutral-300 dark:hover:bg-neutral-800'
               }`}
             >
@@ -84,7 +84,7 @@ export function PricingPlans() {
               onClick={() => setYearly(false)}
               className={`rounded-full px-4 py-2 text-sm font-semibold transition sm:px-5 ${
                 !yearly
-                  ? 'bg-[#2c4ab1] text-white shadow-sm'
+                  ? 'bg-[var(--brand-primary)] text-white shadow-sm'
                   : 'text-neutral-600 hover:bg-neutral-50 dark:text-neutral-300 dark:hover:bg-neutral-800'
               }`}
             >
@@ -147,7 +147,7 @@ export function PricingPlans() {
                 className={`mt-2 text-2xl font-bold tracking-tight ${
                   highlighted
                     ? 'text-white'
-                    : 'text-[#2c4ab1] dark:text-[#5a7ae0]'
+                    : 'text-[var(--brand-primary)]'
                 }`}
               >
                 {price}
@@ -167,7 +167,7 @@ export function PricingPlans() {
                 className={`mt-6 inline-flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold transition ${
                   highlighted
                     ? 'bg-[#5a4fcf] text-white hover:bg-[#4a3fbf]'
-                    : 'bg-[#2c4ab1] text-white hover:bg-[#243f96]'
+                    : 'bg-[var(--brand-primary)] text-white hover:bg-[var(--brand-primary-hover)]'
                 }`}
               >
                 {plan.cta}

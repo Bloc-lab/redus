@@ -102,3 +102,86 @@ export async function fetchPublicSiteInfo(): Promise<SiteInfo | null> {
     return null
   }
 }
+
+export type SiteThemeSettings = {
+  primary: string
+  secondary1: string
+  secondary2?: string
+}
+
+export type CtaSettings =
+  | {
+      variant: 'buttons'
+      buttons?: {
+        phoneLabel?: string
+        emailLabel?: string
+      }
+    }
+  | {
+      variant: 'form'
+      form?: {
+        submitLabel?: string
+        successMessage?: string
+      }
+    }
+
+export type SiteSettingsPublic = {
+  templateId?: string
+  theme?: Partial<SiteThemeSettings>
+  cta?: CtaSettings
+}
+
+function isPlainObject(v: unknown): v is Record<string, unknown> {
+  return !!v && typeof v === 'object' && !Array.isArray(v)
+}
+
+export async function fetchPublicSiteSettings(): Promise<SiteSettingsPublic | null> {
+  const url = buildUrl('/api/v1/public/site-settings')
+  try {
+    const res = await fetch(url)
+    if (!res.ok) return null
+    const data = (await res.json()) as unknown
+    if (!isPlainObject(data)) return null
+
+    const out: SiteSettingsPublic = {}
+
+    if (typeof data.templateId === 'string') out.templateId = data.templateId
+
+    if (isPlainObject(data.theme)) {
+      out.theme = {}
+      if (typeof data.theme.primary === 'string') out.theme.primary = data.theme.primary
+      if (typeof data.theme.secondary1 === 'string')
+        out.theme.secondary1 = data.theme.secondary1
+      if (typeof data.theme.secondary2 === 'string')
+        out.theme.secondary2 = data.theme.secondary2
+    }
+
+    if (isPlainObject(data.cta) && typeof data.cta.variant === 'string') {
+      const variant = data.cta.variant
+      if (variant === 'buttons') {
+        const buttons = isPlainObject(data.cta.buttons) ? data.cta.buttons : null
+        out.cta = {
+          variant: 'buttons',
+          buttons: {
+            phoneLabel: typeof buttons?.phoneLabel === 'string' ? buttons.phoneLabel : undefined,
+            emailLabel: typeof buttons?.emailLabel === 'string' ? buttons.emailLabel : undefined,
+          },
+        }
+      } else if (variant === 'form') {
+        const form = isPlainObject(data.cta.form) ? data.cta.form : null
+        out.cta = {
+          variant: 'form',
+          form: {
+            submitLabel: typeof form?.submitLabel === 'string' ? form.submitLabel : undefined,
+            successMessage:
+              typeof form?.successMessage === 'string' ? form.successMessage : undefined,
+          },
+        }
+      }
+    }
+
+    return out
+  } catch {
+    return null
+  }
+}

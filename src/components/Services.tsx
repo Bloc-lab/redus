@@ -48,7 +48,7 @@ export function Services() {
               key={title}
               className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-neutral-700 dark:bg-neutral-900"
             >
-              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-[#2c4ab1]/10 text-[#2c4ab1]">
+              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--brand-primary-soft)] text-[var(--brand-primary)]">
                 <Icon className="h-5 w-5" aria-hidden />
               </div>
               <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-50">
