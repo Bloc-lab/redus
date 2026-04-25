@@ -11,13 +11,13 @@ export function Layout() {
     <div className="flex min-h-screen flex-col">
       {loading ? (
         <div
-          className="h-1 w-full animate-pulse bg-gradient-to-r from-[var(--brand-primary-30)] via-[var(--brand-primary)] to-[var(--brand-primary-30)]"
+          className="h-1 w-full animate-pulse bg-linear-to-r from-(--brand-primary-30) via-(--brand-primary) to-(--brand-primary-30)"
           aria-hidden
         />
       ) : null}
       <ApiBanner error={error} onRetry={() => void refetch()} />
       <Header />
-      <div className="flex-1">
+      <div className="flex-1 pt-20">
         <Outlet />
       </div>
       <Footer />

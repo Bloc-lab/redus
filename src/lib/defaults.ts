@@ -48,6 +48,17 @@ export const DEFAULT_CONTENT: Record<string, string> = {
   'cta.desc': 'Domluvte si nezávaznou úvodní konzultaci — rádi vám ukážeme, jak můžeme pomoci.',
   'cta.btnPhone': '',
   'cta.btnEmail': 'Napište nám e-mail',
+  'cta.form.badge': 'GET STARTED',
+  'cta.form.title': 'Initiate a Consultation',
+  'cta.form.lead':
+    'Submit your details and a senior partner will connect with you within 24 hours to discuss how our tailored corporate accounting and tax strategies can support your organizational growth.',
+  'cta.form.bullet1': 'Response within 24 hours',
+  'cta.form.bullet2': 'Strictly confidential handling',
+  'cta.form.bullet3': 'Consultation with a senior partner',
+  'cta.form.nameLabel': 'Jméno',
+  'cta.form.phoneLabel': 'Telefon',
+  'cta.form.emailLabel': 'Email',
+  'cta.form.messageLabel': 'Zpráva',
 
   'pricing.title': 'Ceník',
   'pricing.teaser':

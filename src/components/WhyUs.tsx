@@ -14,22 +14,16 @@ export function WhyUs() {
   const quote = pick(content, 'why.quote')
   const author = pick(content, 'why.quoteAuthor')
   const img1 = pick(content, 'why.image1')
-  const img2 = pick(content, 'why.image2')
 
   return (
-    <section className="bg-white px-4 py-16 lg:px-6 lg:py-24">
-      <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center">
+    <section className="bg-[#F8FAFC] px-6 py-20 lg:py-32">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
         <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-          <div className="relative aspect-[4/5] max-h-[420px]">
+          <div className="grid aspect-4/3 grid-cols-1 overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm">
             <img
               src={img1}
               alt=""
-              className="absolute left-0 top-0 h-[78%] w-[70%] rounded-3xl object-cover shadow-lg ring-1 ring-black/5"
-            />
-            <img
-              src={img2}
-              alt=""
-              className="absolute bottom-0 right-0 h-[55%] w-[62%] rounded-3xl object-cover shadow-lg ring-1 ring-black/5"
+              className="h-full w-full object-cover"
             />
           </div>
         </div>
@@ -44,14 +38,14 @@ export function WhyUs() {
           <ul className="mt-6 space-y-3">
             {bullets.map((b) => (
               <li key={b} className="flex items-start gap-3 text-neutral-800">
-                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--brand-primary-soft)] text-[var(--brand-primary)]">
+                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-(--brand-secondary-1) text-(--brand-secondary-2)">
                   <Check className="h-3.5 w-3.5" aria-hidden />
                 </span>
                 <span className="font-medium">{b}</span>
               </li>
             ))}
           </ul>
-          <blockquote className="mt-8 border-l-4 border-[var(--brand-primary-border)] pl-5 italic text-neutral-700">
+          <blockquote className="mt-8 rounded-r-md border-l-4 border-(--brand-primary) bg-white p-6 pl-5 italic text-neutral-700 shadow-sm">
             <p>{quote}</p>
             <footer className="mt-3 text-sm font-semibold not-italic text-neutral-900">
               — {author}

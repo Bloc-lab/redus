@@ -120,6 +120,7 @@ export type CtaSettings =
   | {
       variant: 'form'
       form?: {
+        layout?: 'center' | 'split'
         submitLabel?: string
         successMessage?: string
       }
@@ -138,7 +139,10 @@ function isPlainObject(v: unknown): v is Record<string, unknown> {
 export async function fetchPublicSiteSettings(): Promise<SiteSettingsPublic | null> {
   const url = buildUrl('/api/v1/public/site-settings')
   try {
-    const res = await fetch(url)
+    const headers = new Headers()
+    const key = getApiKey()
+    if (key) headers.set('X-API-KEY', key)
+    const res = await fetch(url, { headers })
     if (!res.ok) return null
     const data = (await res.json()) as unknown
     if (!isPlainObject(data)) return null
@@ -169,9 +173,13 @@ export async function fetchPublicSiteSettings(): Promise<SiteSettingsPublic | nu
         }
       } else if (variant === 'form') {
         const form = isPlainObject(data.cta.form) ? data.cta.form : null
+        const layoutRaw = typeof form?.layout === 'string' ? form.layout : undefined
+        const layout: 'center' | 'split' | undefined =
+          layoutRaw === 'center' || layoutRaw === 'split' ? layoutRaw : undefined
         out.cta = {
           variant: 'form',
           form: {
+            layout,
             submitLabel: typeof form?.submitLabel === 'string' ? form.submitLabel : undefined,
             successMessage:
               typeof form?.successMessage === 'string' ? form.successMessage : undefined,

@@ -8,9 +8,11 @@
 
 :root {
   /* Brand colors (runtime overridable from CMS) */
-  --brand-primary: #2c4ab1;
-  --brand-secondary-1: #5a4fcf;
-  --brand-secondary-2: #22c55e;
+  --brand-primary: #2563eb;
+  /* design-system mapping: Secondary */
+  --brand-secondary-1: #f0f9ff;
+  /* design-system mapping: Tertiary */
+  --brand-secondary-2: #475569;
 
   /* Derived tokens (used by UI). */
   --brand-primary-hover: color-mix(in oklab, var(--brand-primary) 85%, black);
@@ -25,5 +27,6 @@ html {
 }
 
 body {
-  @apply m-0 min-h-screen bg-white font-sans text-neutral-900 antialiased;
+  @apply m-0 min-h-screen font-sans text-neutral-900 antialiased;
+  background-color: #f8fafc; /* Neutral from guide (fixed, not CMS-driven) */
 }
