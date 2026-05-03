@@ -1,6 +1,8 @@
 import { getApiBaseUrl, getApiKey } from './env'
 
 export type ApiErrorKind = 'config' | 'network' | '401' | '403' | 'server' | 'unknown'
+type ContentLang = 'cs' | 'en'
+type PreviewToken = string | null | undefined
 
 export class CmsApiError extends Error {
   constructor(
@@ -20,8 +22,32 @@ function buildUrl(pathWithQuery: string): string {
   return `${base}${path}`
 }
 
+function cleanPreviewToken(previewToken: PreviewToken): string {
+  return previewToken?.trim() ?? ''
+}
+
+function appendPreviewToken(params: URLSearchParams, previewToken: PreviewToken) {
+  const token = cleanPreviewToken(previewToken)
+  if (token) params.set('previewToken', token)
+}
+
+export function buildContentUrl(lang: ContentLang, previewToken?: PreviewToken): string {
+  const params = new URLSearchParams()
+  params.set('lang', lang)
+  appendPreviewToken(params, previewToken)
+  return buildUrl(`/api/v1/content?${params.toString()}`)
+}
+
+export function buildSiteSettingsUrl(previewToken?: PreviewToken): string {
+  const params = new URLSearchParams()
+  appendPreviewToken(params, previewToken)
+  const query = params.toString()
+  return buildUrl(`/api/v1/public/site-settings${query ? `?${query}` : ''}`)
+}
+
 export async function fetchContent(
-  lang: 'cs' | 'en'
+  lang: ContentLang,
+  previewToken?: PreviewToken
 ): Promise<Record<string, string>> {
   const key = getApiKey()
   if (!key) {
@@ -31,16 +57,17 @@ export async function fetchContent(
     )
   }
 
-  const url = buildUrl(
-    `/api/v1/content?lang=${encodeURIComponent(lang)}`
-  )
+  const token = cleanPreviewToken(previewToken)
+  const url = buildContentUrl(lang, token)
   const headers = new Headers()
   headers.set('X-API-KEY', key)
   headers.set('Accept', 'application/json')
+  const init: RequestInit = { headers }
+  if (token) init.cache = 'no-store'
 
   let res: Response
   try {
-    res = await fetch(url, { headers })
+    res = await fetch(url, init)
   } catch {
     throw new CmsApiError(
       'Nelze se připojit k CMS API. Zkontrolujte síť a Vite proxy.',
@@ -50,7 +77,9 @@ export async function fetchContent(
 
   if (res.status === 401 || res.status === 403) {
     throw new CmsApiError(
-      'Neplatný nebo chybějící API klíč.',
+      token && res.status === 403
+        ? 'Náhled vypršel nebo odkaz není platný.'
+        : 'Neplatný nebo chybějící API klíč.',
       res.status === 401 ? '401' : '403',
       res.status
     )
@@ -136,13 +165,25 @@ function isPlainObject(v: unknown): v is Record<string, unknown> {
   return !!v && typeof v === 'object' && !Array.isArray(v)
 }
 
-export async function fetchPublicSiteSettings(): Promise<SiteSettingsPublic | null> {
-  const url = buildUrl('/api/v1/public/site-settings')
+export async function fetchPublicSiteSettings(
+  previewToken?: PreviewToken
+): Promise<SiteSettingsPublic | null> {
+  const token = cleanPreviewToken(previewToken)
+  const url = buildSiteSettingsUrl(token)
   try {
     const headers = new Headers()
     const key = getApiKey()
     if (key) headers.set('X-API-KEY', key)
-    const res = await fetch(url, { headers })
+    const init: RequestInit = { headers }
+    if (token) init.cache = 'no-store'
+    const res = await fetch(url, init)
+    if (token && res.status === 403) {
+      throw new CmsApiError(
+        'Náhled vypršel nebo odkaz není platný.',
+        '403',
+        res.status
+      )
+    }
     if (!res.ok) return null
     const data = (await res.json()) as unknown
     if (!isPlainObject(data)) return null
@@ -189,7 +230,8 @@ export async function fetchPublicSiteSettings(): Promise<SiteSettingsPublic | nu
     }
 
     return out
-  } catch {
+  } catch (e) {
+    if (e instanceof CmsApiError) throw e
     return null
   }
 }

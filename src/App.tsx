@@ -6,8 +6,8 @@ import { Home } from './pages/Home'
 
 export default function App() {
   return (
-    <SiteContentProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <SiteContentProvider>
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
@@ -15,7 +15,7 @@ export default function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>
-      </BrowserRouter>
-    </SiteContentProvider>
+      </SiteContentProvider>
+    </BrowserRouter>
   )
 }

@@ -3,7 +3,7 @@ import { pick } from '../lib/defaults'
 import { useSite } from '../context/SiteContentContext'
 import { LangSwitch } from './LangSwitch'
 
-export function Header() {
+export function Header({ offsetTop = false }: { offsetTop?: boolean }) {
   const { content, siteLogoFromHost } = useSite()
 
   const siteName = pick(content, 'admin.siteName')
@@ -12,7 +12,11 @@ export function Header() {
     pick(content, 'admin.logo', '') || siteLogoFromHost || ''
 
   return (
-    <header className="fixed top-0 z-40 w-full border-b border-neutral-200/80 bg-white/95 backdrop-blur">
+    <header
+      className={`fixed ${
+        offsetTop ? 'top-10' : 'top-0'
+      } z-40 w-full border-b border-neutral-200/80 bg-white/95 backdrop-blur`}
+    >
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-6 px-4 lg:px-6">
         <Link to="/" className="flex min-w-0 items-center gap-3">
           {logoUrl ? (
