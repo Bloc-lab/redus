@@ -56,20 +56,27 @@ export function Cta() {
   const messageLabel = pick(content, 'cta.form.messageLabel')
 
   const formLabels = useMemo(() => {
-    const submitLabel =
+    const submitLabelFromContent = pick(content, 'cta.form.submitLabel')
+    const sendingLabelFromContent = pick(content, 'cta.form.sendingLabel')
+    const successMessageFromContent = pick(content, 'cta.form.successMessage')
+
+    const submitLabelFromSettings =
       settings?.cta?.variant === 'form'
         ? settings.cta.form?.submitLabel?.trim()
         : ''
-    const successMessage =
+    const successMessageFromSettings =
       settings?.cta?.variant === 'form'
         ? settings.cta.form?.successMessage?.trim()
         : ''
     return {
-      submitLabel: submitLabel || 'Odeslat',
+      submitLabel: submitLabelFromContent || submitLabelFromSettings || 'Odeslat',
+      sendingLabel: sendingLabelFromContent || 'Odesílám…',
       successMessage:
-        successMessage || 'Děkujeme, ozveme se vám co nejdříve.',
+        successMessageFromContent ||
+        successMessageFromSettings ||
+        'Děkujeme, ozveme se vám co nejdříve.',
     }
-  }, [settings])
+  }, [content, settings])
 
   const [form, setForm] = useState<FormState>({
     name: '',
@@ -222,7 +229,7 @@ export function Cta() {
             disabled={sending}
             className="inline-flex h-12 w-full items-center justify-center rounded-md bg-(--brand-primary) px-6 text-sm font-semibold text-white shadow-sm transition hover:bg-(--brand-primary-hover) disabled:cursor-not-allowed disabled:opacity-70"
           >
-            {sending ? 'Odesílám…' : formLabels.submitLabel}
+            {sending ? formLabels.sendingLabel : formLabels.submitLabel}
           </button>
         </form>
       )}

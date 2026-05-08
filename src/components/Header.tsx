@@ -1,15 +1,29 @@
 import { Link } from 'react-router-dom'
 import { pick } from '../lib/defaults'
+import { isSectionAvailable, sectionHref } from '../lib/sections'
 import { useSite } from '../context/SiteContentContext'
 import { LangSwitch } from './LangSwitch'
 
 export function Header({ offsetTop = false }: { offsetTop?: boolean }) {
-  const { content, siteLogoFromHost } = useSite()
+  const { content, siteLogoFromHost, settings } = useSite()
 
   const siteName = pick(content, 'admin.siteName')
   const tagline = pick(content, 'admin.tagline')
+  const navLabelServices = pick(content, 'nav.services')
+  const navLabelAbout = pick(content, 'nav.about')
+  const navLabelPricing = pick(content, 'nav.pricing')
+  const navLabelTax = pick(content, 'nav.tax')
+  const navCtaContact = pick(content, 'nav.ctaContact')
   const logoUrl =
     pick(content, 'admin.logo', '') || siteLogoFromHost || ''
+
+  const navItemsFromSettings = settings?.nav?.items
+    ?.filter((item) => {
+      if (item.kind === 'route') return item.href.trim().length > 0
+      return isSectionAvailable(content, item.section)
+    })
+    .slice(0, 8)
+  const ctaFromSettings = settings?.nav?.cta
 
   return (
     <header
@@ -40,27 +54,70 @@ export function Header({ offsetTop = false }: { offsetTop?: boolean }) {
           className="hidden items-center gap-8 text-sm font-medium text-neutral-700 md:flex"
           aria-label="Hlavní navigace"
         >
-          <a href="/#sluzby" className="transition hover:text-(--brand-primary)">
-            Služby
-          </a>
-          <Link to="/o-nas" className="transition hover:text-(--brand-primary)">
-            O nás
-          </Link>
-          <a href="/#cenik" className="transition hover:text-(--brand-primary)">
-            Ceník
-          </a>
-          <a href="/#danove" className="transition hover:text-(--brand-primary)">
-            Daňové poradenství
-          </a>
+          {navItemsFromSettings?.length ? (
+            navItemsFromSettings.map((item, i) => {
+              const label =
+                (item.label ?? '').trim() ||
+                (item.kind === 'section'
+                  ? item.section === 'services'
+                    ? navLabelServices
+                    : item.section === 'pricing'
+                      ? navLabelPricing
+                      : item.section === 'tax'
+                        ? navLabelTax
+                        : navCtaContact
+                  : '')
+
+              const href =
+                item.kind === 'route' ? item.href : sectionHref(item.section)
+
+              return (
+                <a
+                  key={`${item.kind}-${item.kind === 'route' ? item.href : item.section}-${i}`}
+                  href={href}
+                  className="transition hover:text-(--brand-primary)"
+                >
+                  {label}
+                </a>
+              )
+            })
+          ) : (
+            <>
+              <a
+                href="/#sluzby"
+                className="transition hover:text-(--brand-primary)"
+              >
+                {navLabelServices}
+              </a>
+              <Link
+                to="/o-nas"
+                className="transition hover:text-(--brand-primary)"
+              >
+                {navLabelAbout}
+              </Link>
+              <a
+                href="/#cenik"
+                className="transition hover:text-(--brand-primary)"
+              >
+                {navLabelPricing}
+              </a>
+              <a
+                href="/#danove"
+                className="transition hover:text-(--brand-primary)"
+              >
+                {navLabelTax}
+              </a>
+            </>
+          )}
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
           <LangSwitch />
           <a
-            href="/#kontakt"
+            href={(ctaFromSettings?.href?.trim() || '/#kontakt') as string}
             className="inline-flex shrink-0 rounded-lg bg-(--brand-primary) px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-(--brand-primary-hover)"
           >
-            Kontaktujte nás
+            {(ctaFromSettings?.label?.trim() || navCtaContact) as string}
           </a>
         </div>
       </div>

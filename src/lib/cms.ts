@@ -138,6 +138,23 @@ export type SiteThemeSettings = {
   secondary2?: string
 }
 
+export type NavItem =
+  | {
+      kind: 'section'
+      section: 'services' | 'pricing' | 'tax' | 'contact'
+      label?: string
+    }
+  | {
+      kind: 'route'
+      href: string
+      label?: string
+    }
+
+export type NavSettings = {
+  items?: NavItem[]
+  cta?: { href?: string; label?: string }
+}
+
 export type CtaSettings =
   | {
       variant: 'buttons'
@@ -158,6 +175,7 @@ export type CtaSettings =
 export type SiteSettingsPublic = {
   templateId?: string
   theme?: Partial<SiteThemeSettings>
+  nav?: NavSettings
   cta?: CtaSettings
 }
 
@@ -199,6 +217,44 @@ export async function fetchPublicSiteSettings(
         out.theme.secondary1 = data.theme.secondary1
       if (typeof data.theme.secondary2 === 'string')
         out.theme.secondary2 = data.theme.secondary2
+    }
+
+    if (isPlainObject(data.nav)) {
+      const nav: NavSettings = {}
+
+      if (Array.isArray(data.nav.items)) {
+        const items: NavItem[] = []
+        for (const raw of data.nav.items) {
+          if (!isPlainObject(raw)) continue
+          const kind = typeof raw.kind === 'string' ? raw.kind : ''
+          const label = typeof raw.label === 'string' ? raw.label : undefined
+
+          if (kind === 'section') {
+            const section =
+              typeof raw.section === 'string' ? raw.section : ''
+            if (
+              section === 'services' ||
+              section === 'pricing' ||
+              section === 'tax' ||
+              section === 'contact'
+            ) {
+              items.push({ kind: 'section', section, label })
+            }
+          } else if (kind === 'route') {
+            const href = typeof raw.href === 'string' ? raw.href : ''
+            if (href.trim()) items.push({ kind: 'route', href, label })
+          }
+        }
+        if (items.length) nav.items = items
+      }
+
+      if (isPlainObject(data.nav.cta)) {
+        const href = typeof data.nav.cta.href === 'string' ? data.nav.cta.href : undefined
+        const label = typeof data.nav.cta.label === 'string' ? data.nav.cta.label : undefined
+        if ((href?.trim() ?? '') || (label?.trim() ?? '')) nav.cta = { href, label }
+      }
+
+      if (nav.items || nav.cta) out.nav = nav
     }
 
     if (isPlainObject(data.cta) && typeof data.cta.variant === 'string') {

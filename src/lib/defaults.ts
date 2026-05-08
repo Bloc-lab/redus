@@ -3,6 +3,12 @@ export const DEFAULT_CONTENT: Record<string, string> = {
   'admin.siteName': 'REDUS',
   'admin.tagline': 'ÚČETNÍ A DAŇOVÁ KANCELÁŘ',
 
+  'nav.services': 'Služby',
+  'nav.about': 'O nás',
+  'nav.pricing': 'Ceník',
+  'nav.tax': 'Daňové poradenství',
+  'nav.ctaContact': 'Kontaktujte nás',
+
   'hero.badge': 'Vaše finance v bezpečných rukou od roku 2003',
   'hero.title': 'Profesionální účetnictví a daňová řešení pro váš růst',
   'hero.titleAccent': 'účetnictví',
@@ -59,6 +65,9 @@ export const DEFAULT_CONTENT: Record<string, string> = {
   'cta.form.phoneLabel': 'Telefon',
   'cta.form.emailLabel': 'Email',
   'cta.form.messageLabel': 'Zpráva',
+  'cta.form.submitLabel': 'Odeslat',
+  'cta.form.sendingLabel': 'Odesílám…',
+  'cta.form.successMessage': 'Děkujeme, ozveme se vám co nejdříve.',
 
   'pricing.title': 'Ceník',
   'pricing.teaser':
@@ -110,6 +119,13 @@ export const DEFAULT_CONTENT: Record<string, string> = {
   'footer.billing':
     'Martin Rada\nIČO: 12345678\nDIČ: CZ12345678\nDatová schránka: abcdefg',
   'footer.copyright': '© 2025 REDUS. Všechna práva vyhrazena.',
+  'footer.headingContact': 'Kontaktní údaje',
+  'footer.headingBilling': 'Fakturační údaje',
+  'footer.linkedinHref': 'https://www.linkedin.com/',
+  'footer.linkPrivacyLabel': 'Ochrana soukromí',
+  'footer.linkPrivacyHref': '/o-nas',
+  'footer.linkTermsLabel': 'Obchodní podmínky',
+  'footer.linkTermsHref': '/o-nas',
 
   'about.text':
     'REDUS je účetní a daňová kancelář s dlouholetou tradicí. Pomáháme firmám i podnikatelům s řádným vedením účetnictví, daněmi a strategickým poradenstvím.',

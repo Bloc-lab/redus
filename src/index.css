@@ -30,3 +30,24 @@ body {
   @apply m-0 min-h-screen font-sans text-neutral-900 antialiased;
   background-color: #f8fafc; /* Neutral from guide (fixed, not CMS-driven) */
 }
+
+/* Skeleton loading (shimmer — moving highlight over neutral base) */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    105deg,
+    rgb(226 232 240) 0%,
+    rgb(248 250 252) 40%,
+    rgb(226 232 240) 80%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 2s ease-in-out infinite;
+}

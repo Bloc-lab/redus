@@ -12,6 +12,13 @@ export function Footer() {
   const email = pick(content, 'contact.email')
   const billing = pick(content, 'footer.billing')
   const copyright = pick(content, 'footer.copyright')
+  const headingContact = pick(content, 'footer.headingContact')
+  const headingBilling = pick(content, 'footer.headingBilling')
+  const linkedinHref = pick(content, 'footer.linkedinHref', 'https://www.linkedin.com/')
+  const linkPrivacyLabel = pick(content, 'footer.linkPrivacyLabel')
+  const linkPrivacyHref = pick(content, 'footer.linkPrivacyHref', '/o-nas')
+  const linkTermsLabel = pick(content, 'footer.linkTermsLabel')
+  const linkTermsHref = pick(content, 'footer.linkTermsHref', '/o-nas')
 
   const telHref = phone.replace(/\s/g, '')
 
@@ -25,7 +32,7 @@ export function Footer() {
           </p>
           <div className="mt-4 flex gap-3">
             <a
-              href="https://www.linkedin.com/"
+              href={linkedinHref}
               className="flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-800 text-neutral-300 transition hover:border-(--brand-primary) hover:text-white"
               aria-label="LinkedIn"
             >
@@ -36,7 +43,7 @@ export function Footer() {
 
         <div>
           <h3 className="text-sm font-semibold uppercase tracking-wide text-white">
-            Kontaktní údaje
+            {headingContact}
           </h3>
           <ul className="mt-4 space-y-3 text-sm text-neutral-300">
             <li className="flex gap-2">
@@ -60,7 +67,7 @@ export function Footer() {
 
         <div>
           <h3 className="text-sm font-semibold uppercase tracking-wide text-white">
-            Fakturační údaje
+            {headingBilling}
           </h3>
           <pre className="mt-4 whitespace-pre-wrap font-sans text-sm leading-relaxed text-neutral-300">
             {billing}
@@ -71,12 +78,12 @@ export function Footer() {
       <div className="mx-auto mt-12 flex max-w-6xl flex-col items-start justify-between gap-4 border-t border-neutral-800 pt-8 text-xs text-neutral-400 sm:flex-row sm:items-center">
         <p>{copyright}</p>
         <div className="flex gap-6">
-          <Link to="/o-nas" className="hover:text-white">
-            Ochrana soukromí
+          <Link to={linkPrivacyHref} className="hover:text-white">
+            {linkPrivacyLabel}
           </Link>
           <span className="text-neutral-700">|</span>
-          <Link to="/o-nas" className="hover:text-white">
-            Obchodní podmínky
+          <Link to={linkTermsHref} className="hover:text-white">
+            {linkTermsLabel}
           </Link>
         </div>
       </div>

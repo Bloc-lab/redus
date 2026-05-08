@@ -2,6 +2,8 @@ import { Link, Outlet, useLocation } from 'react-router-dom'
 import { ApiBanner } from './ApiBanner'
 import { Footer } from './Footer'
 import { Header } from './Header'
+import { HeaderSkeleton } from './HeaderSkeleton'
+import { SiteContentSkeleton } from './SiteContentSkeleton'
 import { useSite } from '../context/SiteContentContext'
 
 function closePreviewTo(location: ReturnType<typeof useLocation>): string {
@@ -41,9 +43,19 @@ export function Layout() {
         />
       ) : null}
       <ApiBanner error={error} onRetry={() => void refetch()} />
-      <Header offsetTop={isPreview} />
+      {loading ? (
+        <HeaderSkeleton offsetTop={isPreview} />
+      ) : (
+        <Header offsetTop={isPreview} />
+      )}
       <div className="flex-1 pt-20" style={isPreview ? { paddingTop: '7.5rem' } : undefined}>
-        <Outlet />
+        {loading ? (
+          <SiteContentSkeleton
+            variant={location.pathname.startsWith('/o-nas') ? 'about' : 'home'}
+          />
+        ) : (
+          <Outlet />
+        )}
       </div>
       <Footer />
     </div>
