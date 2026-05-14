@@ -52,7 +52,7 @@ export async function fetchContent(
   const key = getApiKey()
   if (!key) {
     throw new CmsApiError(
-      'Chybí VITE_CMS_API_KEY v prostředí.',
+      'Chybí CMS API klíč pro tento hostname (VITE_CMS_API_KEY_BLOCLAB / VITE_CMS_API_KEY_REDUS / VITE_CMS_API_KEY).',
       'config'
     )
   }

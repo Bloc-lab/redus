@@ -117,13 +117,12 @@ export function Cta() {
 
             setSending(true)
             try {
+              const apiKey = getApiKey()
               const res = await fetch('/api/v1/public/lead', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  ...(getApiKey()
-                    ? { 'X-API-KEY': getApiKey() as string }
-                    : {}),
+                  ...(apiKey ? { 'X-API-KEY': apiKey } : {}),
                 },
                 body: JSON.stringify(payload),
               })

@@ -11,6 +11,20 @@ export default defineConfig(({ mode }) => {
   const proxyTarget =
     env.VITE_CMS_PROXY_TARGET?.trim() || 'http://localhost:3000'
 
+  if (mode === 'production') {
+    const hasCmsKey = Boolean(
+      env.VITE_CMS_API_KEY_BLOCLAB?.trim() ||
+        env.VITE_CMS_API_KEY_REDUS?.trim() ||
+        env.VITE_CMS_API_KEY?.trim() ||
+        env.PUBLIC_CMS_API_KEY?.trim()
+    )
+    if (!hasCmsKey) {
+      console.warn(
+        '[CMS] Produkční build: není nastaven žádný z VITE_CMS_API_KEY_BLOCLAB, VITE_CMS_API_KEY_REDUS ani VITE_CMS_API_KEY — API nebude fungovat.'
+      )
+    }
+  }
+
   return {
     envPrefix: ['VITE_', 'PUBLIC_'],
     plugins: [react(), tailwindcss()],
