@@ -5,10 +5,13 @@ import { Header } from './Header'
 import { HeaderSkeleton } from './HeaderSkeleton'
 import { SiteContentSkeleton } from './SiteContentSkeleton'
 import { useSite } from '../context/SiteContentContext'
+import { clearPreviewSession } from '../lib/previewQuery'
 
 function closePreviewTo(location: ReturnType<typeof useLocation>): string {
+  clearPreviewSession()
   const params = new URLSearchParams(location.search)
   params.delete('previewToken')
+  params.delete('lang')
   const query = params.toString()
   return `${location.pathname}${query ? `?${query}` : ''}${location.hash}`
 }

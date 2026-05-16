@@ -1,8 +1,43 @@
 import { getApiBaseUrl, getApiKey } from './env'
+import type { Lang } from './lang'
 
-export type ApiErrorKind = 'config' | 'network' | '401' | '403' | 'server' | 'unknown'
-type ContentLang = 'cs' | 'en'
+export type ApiErrorKind =
+  | 'config'
+  | 'network'
+  | '401'
+  | '403'
+  | 'preview_expired'
+  | 'server'
+  | 'unknown'
+type ContentLang = Lang
 type PreviewToken = string | null | undefined
+
+const PREVIEW_EXPIRED_HINT =
+  'Platnost náhledového odkazu vypršela (cca 1 hodina). V administraci vygenerujte nový odkaz náhledu.'
+
+function looksLikePreviewTokenExpired(message: string | null | undefined): boolean {
+  const m = (message ?? '').trim()
+  if (!m) return false
+  return m === 'Preview token expired' || /preview token expired/i.test(m)
+}
+
+async function readJsonErrorMessage(res: Response): Promise<string | null> {
+  const raw = await res.text()
+  const t = raw.trim()
+  if (!t) return null
+  try {
+    const j = JSON.parse(t) as {
+      message?: unknown
+      error?: unknown
+    }
+    const m =
+      (typeof j.message === 'string' ? j.message : null) ??
+      (typeof j.error === 'string' ? j.error : null)
+    return m?.trim() || null
+  } catch {
+    return t
+  }
+}
 
 export class CmsApiError extends Error {
   constructor(
@@ -38,11 +73,14 @@ export function buildContentUrl(lang: ContentLang, previewToken?: PreviewToken):
   return buildUrl(`/api/v1/content?${params.toString()}`)
 }
 
-export function buildSiteSettingsUrl(previewToken?: PreviewToken): string {
+export function buildSiteSettingsUrl(
+  lang: ContentLang,
+  previewToken?: PreviewToken
+): string {
   const params = new URLSearchParams()
+  params.set('lang', lang)
   appendPreviewToken(params, previewToken)
-  const query = params.toString()
-  return buildUrl(`/api/v1/public/site-settings${query ? `?${query}` : ''}`)
+  return buildUrl(`/api/v1/public/site-settings?${params.toString()}`)
 }
 
 export async function fetchContent(
@@ -76,6 +114,11 @@ export async function fetchContent(
   }
 
   if (res.status === 401 || res.status === 403) {
+    const detail = await readJsonErrorMessage(res)
+    const expired = Boolean(token && res.status === 403 && looksLikePreviewTokenExpired(detail))
+    if (expired) {
+      throw new CmsApiError(PREVIEW_EXPIRED_HINT, 'preview_expired', res.status)
+    }
     throw new CmsApiError(
       token && res.status === 403
         ? 'Náhled vypršel nebo odkaz není platný.'
@@ -184,10 +227,11 @@ function isPlainObject(v: unknown): v is Record<string, unknown> {
 }
 
 export async function fetchPublicSiteSettings(
+  lang: ContentLang,
   previewToken?: PreviewToken
 ): Promise<SiteSettingsPublic | null> {
   const token = cleanPreviewToken(previewToken)
-  const url = buildSiteSettingsUrl(token)
+  const url = buildSiteSettingsUrl(lang, token)
   try {
     const headers = new Headers()
     const key = getApiKey()
@@ -196,6 +240,10 @@ export async function fetchPublicSiteSettings(
     if (token) init.cache = 'no-store'
     const res = await fetch(url, init)
     if (token && res.status === 403) {
+      const detail = await readJsonErrorMessage(res)
+      if (looksLikePreviewTokenExpired(detail)) {
+        throw new CmsApiError(PREVIEW_EXPIRED_HINT, 'preview_expired', res.status)
+      }
       throw new CmsApiError(
         'Náhled vypršel nebo odkaz není platný.',
         '403',

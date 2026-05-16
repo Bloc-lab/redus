@@ -6,18 +6,35 @@ import {
   fetchPublicSiteSettings,
   type SiteSettingsPublic,
 } from '../lib/cms'
+import type { Lang } from '../lib/lang'
+import { DEFAULT_LANG } from '../lib/lang'
 import { DEFAULT_CONTENT } from '../lib/defaults'
+import { hrefWithPreview } from '../lib/previewQuery'
 import { applyThemeFromSettings } from '../lib/theme'
 
-export type Lang = 'cs' | 'en'
+export type { Lang } from '../lib/lang'
 
-export function useSiteContent(previewToken: string | null) {
-  const [lang, setLang] = useState<Lang>('cs')
+type UseSiteContentOptions = {
+  previewToken: string | null
+  urlLang: Lang | null
+  initialLang: Lang
+}
+
+export function useSiteContent({
+  previewToken,
+  urlLang,
+  initialLang,
+}: UseSiteContentOptions) {
+  const [lang, setLang] = useState<Lang>(() => initialLang ?? DEFAULT_LANG)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<CmsApiError | null>(null)
   const [raw, setRaw] = useState<Record<string, string>>({})
   const [siteLogoFromHost, setSiteLogoFromHost] = useState<string | null>(null)
   const [settings, setSettings] = useState<SiteSettingsPublic | null>(null)
+
+  useEffect(() => {
+    if (urlLang !== null) setLang(urlLang)
+  }, [urlLang])
 
   const load = useCallback(async () => {
     setLoading(true)
@@ -28,7 +45,7 @@ export function useSiteContent(previewToken: string | null) {
       (e: unknown) => ({ ok: false as const, error: e })
     )
     const siteTask = fetchPublicSiteInfo().catch(() => null)
-    const settingsTask = fetchPublicSiteSettings(previewToken).then(
+    const settingsTask = fetchPublicSiteSettings(lang, previewToken).then(
       (data) => ({ ok: true as const, data }),
       (e: unknown) => ({ ok: false as const, error: e })
     )
@@ -82,6 +99,11 @@ export function useSiteContent(previewToken: string | null) {
 
   const content = useMemo(() => ({ ...DEFAULT_CONTENT, ...raw }), [raw])
 
+  const appendPreviewToHref = useCallback(
+    (href: string) => hrefWithPreview(href, previewToken, lang),
+    [previewToken, lang]
+  )
+
   return {
     lang,
     setLang,
@@ -93,5 +115,6 @@ export function useSiteContent(previewToken: string | null) {
     content,
     siteLogoFromHost,
     settings,
+    appendPreviewToHref,
   }
 }

@@ -5,7 +5,7 @@ import { useSite } from '../context/SiteContentContext'
 import { LangSwitch } from './LangSwitch'
 
 export function Header({ offsetTop = false }: { offsetTop?: boolean }) {
-  const { content, siteLogoFromHost, settings } = useSite()
+  const { content, siteLogoFromHost, settings, appendPreviewToHref } = useSite()
 
   const siteName = pick(content, 'admin.siteName')
   const tagline = pick(content, 'admin.tagline')
@@ -32,7 +32,7 @@ export function Header({ offsetTop = false }: { offsetTop?: boolean }) {
       } z-40 w-full border-b border-neutral-200/80 bg-white/95 backdrop-blur`}
     >
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-6 px-4 lg:px-6">
-        <Link to="/" className="flex min-w-0 items-center gap-3">
+        <Link to={appendPreviewToHref('/')} className="flex min-w-0 items-center gap-3">
           {logoUrl ? (
             <img
               src={logoUrl}
@@ -68,8 +68,9 @@ export function Header({ offsetTop = false }: { offsetTop?: boolean }) {
                         : navCtaContact
                   : '')
 
-              const href =
+              const href = appendPreviewToHref(
                 item.kind === 'route' ? item.href : sectionHref(item.section)
+              )
 
               return (
                 <a
@@ -84,25 +85,25 @@ export function Header({ offsetTop = false }: { offsetTop?: boolean }) {
           ) : (
             <>
               <a
-                href="/#sluzby"
+                href={appendPreviewToHref('/#sluzby')}
                 className="transition hover:text-(--brand-primary)"
               >
                 {navLabelServices}
               </a>
               <Link
-                to="/o-nas"
+                to={appendPreviewToHref('/o-nas')}
                 className="transition hover:text-(--brand-primary)"
               >
                 {navLabelAbout}
               </Link>
               <a
-                href="/#cenik"
+                href={appendPreviewToHref('/#cenik')}
                 className="transition hover:text-(--brand-primary)"
               >
                 {navLabelPricing}
               </a>
               <a
-                href="/#danove"
+                href={appendPreviewToHref('/#danove')}
                 className="transition hover:text-(--brand-primary)"
               >
                 {navLabelTax}
@@ -114,7 +115,9 @@ export function Header({ offsetTop = false }: { offsetTop?: boolean }) {
         <div className="flex items-center gap-2 sm:gap-3">
           <LangSwitch />
           <a
-            href={(ctaFromSettings?.href?.trim() || '/#kontakt') as string}
+            href={appendPreviewToHref(
+              (ctaFromSettings?.href?.trim() || '/#kontakt') as string
+            )}
             className="inline-flex shrink-0 rounded-lg bg-(--brand-primary) px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-(--brand-primary-hover)"
           >
             {(ctaFromSettings?.label?.trim() || navCtaContact) as string}

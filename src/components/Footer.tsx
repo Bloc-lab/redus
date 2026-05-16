@@ -4,7 +4,7 @@ import { pick } from '../lib/defaults'
 import { useSite } from '../context/SiteContentContext'
 
 export function Footer() {
-  const { content } = useSite()
+  const { content, appendPreviewToHref } = useSite()
   const siteName = pick(content, 'admin.siteName')
   const blurb = pick(content, 'footer.blurb')
   const address = pick(content, 'contact.address')
@@ -78,11 +78,11 @@ export function Footer() {
       <div className="mx-auto mt-12 flex max-w-6xl flex-col items-start justify-between gap-4 border-t border-neutral-800 pt-8 text-xs text-neutral-400 sm:flex-row sm:items-center">
         <p>{copyright}</p>
         <div className="flex gap-6">
-          <Link to={linkPrivacyHref} className="hover:text-white">
+          <Link to={appendPreviewToHref(linkPrivacyHref)} className="hover:text-white">
             {linkPrivacyLabel}
           </Link>
           <span className="text-neutral-700">|</span>
-          <Link to={linkTermsHref} className="hover:text-white">
+          <Link to={appendPreviewToHref(linkTermsHref)} className="hover:text-white">
             {linkTermsLabel}
           </Link>
         </div>
