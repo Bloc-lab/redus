@@ -157,9 +157,15 @@ export async function fetchContent(
 export type SiteInfo = { siteName: string; logoUrl: string | null }
 
 export async function fetchPublicSiteInfo(): Promise<SiteInfo | null> {
+  const key = getApiKey()
+  if (!key) return null
+
   const url = buildUrl('/api/v1/public/site-info')
+  const headers = new Headers()
+  headers.set('X-API-KEY', key)
+  headers.set('Accept', 'application/json')
   try {
-    const res = await fetch(url)
+    const res = await fetch(url, { headers })
     if (!res.ok) return null
     const data = (await res.json()) as {
       siteName?: string
